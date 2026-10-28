@@ -2,6 +2,7 @@
 USE [UniversityManagementDB];
 GO
      ----Phase4_01_Insert_Department
+     /*
  Business Scenario for University Management System
  Phase 4 - Data Population | 01 of 21: Department
  Synthetic, deterministic seed data. Run only in UniversityManagementDB.

@@ -1,4 +1,6 @@
-﻿-- Extracted from UniversityManagementDB(2).sql; source lines 2169-2514.
+﻿IF OBJECT_ID('tempdb..#ActualFK') IS NOT NULL DROP TABLE #ActualFK;
+GO
+-- -- Extracted from UniversityManagementDB(2).sql; source lines 2169-2514.
 USE [UniversityManagementDB];
 GO
 ---05_Final_Database_Schema_Audit
@@ -92,6 +94,38 @@ INSERT INTO #ExpectedColumn(TableName,ColumnName,ColumnOrder,TypeName,NvarcharLe
 (N'DepartmentHead',N'ProfessorID',2,N'int',NULL,NULL,NULL,0),
 (N'Student',N'StudentID',1,N'int',NULL,NULL,NULL,0),
 (N'Student',N'Name',2,N'nvarchar',150,NULL,NULL,0),
+(N'Student',N'DateOfBirth',3,N'date',NULL,NULL,NULL,0),
+(N'Student',N'Email',4,N'nvarchar',254,NULL,NULL,0),
+(N'Student',N'GraduationProjectID',5,N'int',NULL,NULL,NULL,1),
+(N'CourseResponsibility',N'CourseID',1,N'int',NULL,NULL,NULL,0),
+(N'CourseResponsibility',N'ProfessorID',2,N'int',NULL,NULL,NULL,0),
+(N'GraduationProjectSupervision',N'GraduationProjectID',1,N'int',NULL,NULL,NULL,0),
+(N'GraduationProjectSupervision',N'ProfessorID',2,N'int',NULL,NULL,NULL,0),
+(N'ResearchProjectSupervision',N'ResearchProjectID',1,N'int',NULL,NULL,NULL,0),
+(N'ResearchProjectSupervision',N'ProfessorID',2,N'int',NULL,NULL,NULL,0),
+(N'StudentPhone',N'StudentID',1,N'int',NULL,NULL,NULL,0),
+(N'StudentPhone',N'PhoneNumber',2,N'nvarchar',30,NULL,NULL,0),
+(N'UniversityIDCard',N'CardNumber',1,N'nvarchar',32,NULL,NULL,0),
+(N'UniversityIDCard',N'StudentID',2,N'int',NULL,NULL,NULL,0),
+(N'UniversityIDCard',N'IssueDate',3,N'date',NULL,NULL,NULL,0),
+(N'Enrollment',N'StudentID',1,N'int',NULL,NULL,NULL,0),
+(N'Enrollment',N'CourseID',2,N'int',NULL,NULL,NULL,0),
+(N'Enrollment',N'SemesterID',3,N'int',NULL,NULL,NULL,0),
+(N'Enrollment',N'Grade',4,N'decimal',NULL,5,2,1),
+(N'Enrollment',N'EnrollmentStatus',5,N'nvarchar',20,NULL,NULL,0),
+(N'Borrowing',N'BorrowingID',1,N'bigint',NULL,NULL,NULL,0),
+(N'Borrowing',N'StudentID',2,N'int',NULL,NULL,NULL,0),
+(N'Borrowing',N'BookID',3,N'int',NULL,NULL,NULL,0),
+(N'Borrowing',N'BorrowDate',4,N'date',NULL,NULL,NULL,0),
+(N'Borrowing',N'DueDate',5,N'date',NULL,NULL,NULL,0),
+(N'Borrowing',N'ReturnDate',6,N'date',NULL,NULL,NULL,1),
+(N'ClubMembership',N'ClubMembershipID',1,N'bigint',NULL,NULL,NULL,0),
+(N'ClubMembership',N'StudentID',2,N'int',NULL,NULL,NULL,0),
+(N'ClubMembership',N'ClubID',3,N'int',NULL,NULL,NULL,0),
+(N'ClubMembership',N'JoinDate',4,N'date',NULL,NULL,NULL,0),
+(N'ClubMembership',N'EndDate',5,N'date',NULL,NULL,NULL,1),
+(N'ResearchParticipation',N'StudentID',1,N'int',NULL,NULL,NULL,0),
+(N'ResearchParticipation',N'ResearchProjectID',2,N'int',NULL,NULL,NULL,0),
 (N'ResearchCollaboration',N'StudentID',1,N'int',NULL,NULL,NULL,0),
 (N'ResearchCollaboration',N'ProfessorID',2,N'int',NULL,NULL,NULL,0),
 (N'ResearchCollaboration',N'ResearchProjectID',3,N'int',NULL,NULL,NULL,0),
