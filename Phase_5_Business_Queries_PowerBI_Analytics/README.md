@@ -224,6 +224,29 @@ Development and local verification completed.
 
 Repository artifact publication and verification
 are tracked separately.
+## معاينة صفحات تقرير Power BI
+
+يتضمن التقرير ست صفحات تعرض مؤشرات الجامعة والتسجيل والأداء الأكاديمي وأعضاء هيئة التدريس والأنشطة البحثية.
+
+### الصفحة الأولى: University at a Glance
+![University at a Glance](PowerBI/Screenshots/01_University_at_a_Glance.png)
+
+### الصفحة الثانية: Enrollment & Completion
+![Enrollment and Completion](PowerBI/Screenshots/02_Enrollment_and_Completion.png)
+
+### الصفحة الثالثة: Academic Performance
+![Academic Performance](PowerBI/Screenshots/03_Academic_Performance.png)
+
+### الصفحة الرابعة: Faculty & Teaching
+![Faculty and Teaching](PowerBI/Screenshots/04_Faculty_and_Teaching.png)
+
+### الصفحة الخامسة: Research Activity
+![Research Activity](PowerBI/Screenshots/05_Research_Activity.png)
+
+### الصفحة السادسة: Research Networks
+![Research Networks](PowerBI/Screenshots/06_Research_Networks.png)
+
+[تحميل ملف تقرير Power BI](PowerBI/University_Management_Analytics_v2.pbix)
 
 ## Next Phase
 
