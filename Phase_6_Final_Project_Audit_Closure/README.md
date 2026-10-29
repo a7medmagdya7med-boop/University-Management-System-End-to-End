@@ -1,242 +1,150 @@
+# المرحلة السادسة: Final Project Audit & Closure
 
-# Phase 6 — Final Project Audit & Closure
+يوثّق هذا الملف نتائج اختبار SQL، وأدلة الاختبار، وتسليم تقرير Power BI، والبنود التي ما زالت تحتاج إلى قرار أعمال.
 
-## Project
-University Management System — End-to-End
+تستند النتائج أدناه إلى نتائج SSMS والصور المقدّمة بتاريخ 28 October 2026، وإلى تأكيد رفع الملفات إلى GitHub. لا يمثل هذا التوثيق تشغيلًا جديدًا للاختبارات أو تحققًا مستقلًا من إعدادات Power BI Service.
 
-## Objective
-Conduct the final technical and business-rule audit
-of the University Management System, reconcile
-SQL Server results with Power BI analytics, and
-document project closure and outstanding decisions.
+## نطاق الاختبار
 
-## 1. Database Structure Audit
+- قاعدة الاختبار: UniversityManagementDB_Test.
+- قاعدة المشروع الأساسية: UniversityManagementDB.
+- بيئة التنفيذ الظاهرة: SQL Server LocalDB، باستخدام SSMS.
+- عدد جداول المشروع: 21 جدولًا.
+- إجمالي بيانات الاختبار: 969 سجلًا، مطابقًا للإجمالي المتوقع.
+- فصل نسخة الاختبار عن ملفات المشروع الأساسية ضروري للمحافظة على إعدادات كل نسخة.
 
-Database: UniversityManagementDB
-Platform: Microsoft SQL Server LocalDB
+## ملخص نتائج SQL
 
-Verified results:
-- Total database tables: 21
-- Tables with Primary Keys: 21
-- Tables without Primary Keys: 0
-- Total Foreign Key constraints: 30
-- Enabled Foreign Keys: 30
-- Disabled Foreign Keys: 0
-- Untrusted Foreign Keys: 0
+| الفحص | النتيجة المثبتة | الحالة |
+| --- | --- | --- |
+| فحص Schema Audit | نجح 147 من أصل 147 فحصًا، مع صفر Failed Checks | PASS |
+| فحص الجداول | تطابق 21 جدولًا مع العدد المتوقع | PASS |
+| فحص الأعمدة | تطابق 64 عمودًا مع تعريفات الفحص | PASS |
+| فحص Primary Keys | تطابق 21 Primary Key | PASS |
+| فحص Foreign Keys | تطابق 30 Foreign Key | PASS |
+| فحص Unique Keys | نجحت الفحوص الخمسة | PASS |
+| فحص Filtered Indexes | نجح الفحصان | PASS |
+| فحص Critical Checks | نجحت الفحوص الأربعة | PASS |
+| فحص Final Integrity Audit | نجح 133 فحصًا، وصفر Failed Checks، وبندان REVIEW، من أصل 135 فحصًا | REVIEW |
+| فحص إجمالي البيانات | تطابق 969 سجلًا مع الإجمالي المتوقع | PASS |
+| فحص Phase 5 Smoke Checks | أظهر اسم قاعدة الاختبار الصحيح والأعداد المتوقعة، مع إظهار القرارين المفتوحين | PASS مع بنود أعمال مفتوحة |
 
-Result: PASS
+نجاح تنفيذ الاستعلام في SSMS يعني أن التنفيذ اكتمل؛ أما قبول نتيجة الفحص فيعتمد على القيم داخل Results. تظل نتيجة Final Integrity Audit هي REVIEW ما دام بندا المراجعة مفتوحين، حتى مع وجود صفر Failed Checks.
 
-## 2. Referential Integrity Verification
+## القرارات المفتوحة
 
-Verification activities:
-- Foreign Key metadata inspection
-- Enabled and trusted constraint validation
-- Expected versus actual relationship comparison
-- Composite Foreign Key mapping verification
-- DBCC CHECKCONSTRAINTS execution
+| القرار | الملاحظة المسجلة | حالة الإغلاق |
+| --- | --- | --- |
+| قرار OBD-01 | يوجد 16 طالبًا دون UniversityIDCard. يحتاج توقيت الإصدار وإلزاميته إلى تحديد قاعدة أعمال معتمدة | OPEN |
+| قرار D-18 | يوجد 16 زوجًا من StudentID وResearchProjectID في ResearchParticipation دون سجل مقابل في ResearchCollaboration. يحتاج الحد الأدنى للمشاركة وتوقيت تسجيل التعاون إلى قرار معتمد | OPEN |
 
-Results:
-- Expected relationships: 30
-- Matched relationships: 30
-- Missing relationships: 0
-- Relationships requiring review: 0
-- Composite Foreign Keys inspected: 3
-- Composite column mappings validated: 6
-- Failed composite mappings: 0
+هذه الحالات موثّقة للمراجعة، ولا تُصنّف تلقائيًا مخالفات قبل اعتماد قاعدة الأعمال المرتبطة بها. لا تُضاف بيانات أو تُعدّل شروط الفحص لمجرد تحويل النتيجة إلى PASS. عند اعتماد القرار، يُوثّق أثره في المتطلبات والاختبارات، وتُعاد الفحوص ذات الصلة.
 
-Result: PASS
+## أعداد بيانات الاختبار
 
-## 3. Business Rule Validation
+| الجدول | عدد السجلات |
+| --- | ---: |
+| جدول Department | 8 |
+| جدول Professor | 32 |
+| جدول Semester | 8 |
+| جدول Library | 1 |
+| جدول StudentClub | 8 |
+| جدول Course | 24 |
+| جدول GraduationProject | 16 |
+| جدول ResearchProject | 16 |
+| جدول Book | 32 |
+| جدول DepartmentHead | 8 |
+| جدول Student | 64 |
+| جدول CourseResponsibility | 40 |
+| جدول GraduationProjectSupervision | 24 |
+| جدول ResearchProjectSupervision | 24 |
+| جدول StudentPhone | 80 |
+| جدول UniversityIDCard | 48 |
+| جدول Enrollment | 192 |
+| جدول Borrowing | 96 |
+| جدول ClubMembership | 88 |
+| جدول ResearchParticipation | 80 |
+| جدول ResearchCollaboration | 80 |
+| إجمالي السجلات | **969** |
 
-Nine business-rule checks were executed.
+## التصحيحات التي شملتها نسخة SQL
 
-BR-01: Courses without responsible professors
-BR-02: Graduation projects without students
-BR-03: Departments without assigned heads
-BR-04: Research projects without lead departments
-BR-05: Research projects without supervisors
-BR-06: Duplicate research collaboration tuples
-BR-07: Collaborations without research participation
-BR-08: Department heads assigned across departments
-BR-09: Advisors assigned across departments
+- استكمال قائمة Expected Columns في Schema Audit لتغطي الأعمدة الـ 64؛ عالج ذلك نتيجة الفشل الناتجة عن نقص قائمة التوقعات.
+- إضافة تنظيف الجدول المؤقت #ActualFK قبل إعادة تشغيل Schema Audit في الجلسة نفسها.
+- إصلاح بداية التعليق في Department seed script بإضافة علامة فتح التعليق المفقودة.
+- الإبقاء على حماية Seed Scripts من إدخال دفعة ثانية عندما يحتوي الجدول على بيانات؛ عند ظهور رسالة الحماية، يُستخدم قسم التحقق المناسب لتقييم البيانات الموجودة.
 
-Audit results:
-- Total checks: 9
-- Passed checks: 9
-- Checks requiring review: 0
-- Recorded violations: 0
+## تسليم تقرير Power BI
 
-Result: PASS
+تتضمن النسخة الحالية ست صفحات بعد الدمج. تحل هذه القائمة محل الإشارة السابقة إلى 18 صفحة:
 
-## 4. SQL and Power BI Reconciliation
+1. الصفحة الأولى: University at a Glance.
+2. الصفحة الثانية: Enrollment & Completion.
+3. الصفحة الثالثة: Academic Performance.
+4. الصفحة الرابعة: Faculty & Teaching.
+5. الصفحة الخامسة: Research Activity.
+6. الصفحة السادسة: Research Networks.
 
-The following SQL Server totals were verified:
+أُضيف ملف PBIX وصور الصفحات الست إلى GitHub وفق تأكيد صاحب المشروع. وتعرض الأدلة استخدام DirectQuery. فتح التقرير وتفاعله مع البيانات يتطلب اتصالًا صالحًا بمصدر SQL Server؛ ملف PBIX وحده لا يضمن إمكانية تشغيل التقرير على جهاز آخر.
 
-| Metric | Verified Value |
-|---|---:|
-| Departments | 8 |
-| Students | 64 |
-| Professors | 32 |
-| Courses | 24 |
-| Enrollments | 192 |
-| Research Projects | 16 |
-| Research Collaboration Records | 80 |
-| Cross-Department Collaboration Records | 32 |
-| Research Supervision Assignments | 24 |
+- رابط [تحميل تقرير Power BI بصيغة PBIX](../Phase_5_Business_Queries_PowerBI_Analytics/PowerBI/University_Management_Analytics_v2.pbix).
+- رابط [استعراض شرح Phase 5 وصور الصفحات الست](../Phase_5_Business_Queries_PowerBI_Analytics/README.md).
+- رابط [مجلد صور تقرير Power BI](../Phase_5_Business_Queries_PowerBI_Analytics/PowerBI/Screenshots/).
 
-These figures provide reference values for
-Power BI reconciliation.
+تتوافق المؤشرات الظاهرة في صفحة النظرة العامة مع أعداد الاختبار ذات الصلة: 64 طالبًا، و32 عضو هيئة تدريس، و24 مقررًا، و8 أقسام، و192 تسجيلًا. تتوزع التسجيلات إلى 160 Completed، و16 Enrolled، و16 Planned؛ وتبلغ نسبة Completed إلى جميع التسجيلات 83.33%.
 
-## 5. Power BI Dashboard Quality Assurance
+لا تُعد هذه المطابقة المحدودة إثباتًا لمراجعة جميع DAX Measures أو جميع تفاعلات الصفحات الست. يُسجل أي تحقق إضافي مع وصف الفلاتر، والمؤشر، واستعلام SQL المقارن، ونتيجة المقارنة.
 
-Report:
-University_Management_Analytics
+رفع الملفات إلى GitHub يثبت تسليم ملفات المشروع. أما النشر إلى Power BI Service وإعداد Gateway والاتصال من الخدمة فحالات منفصلة، ولم تُثبتها أدلة هذه المراجعة.
 
-Storage Mode:
-DirectQuery
+## أدلة الاختبار
 
-Report scope:
-18 report pages, including research collaboration,
-research participation, supervision workload,
-and supervision coverage analysis.
+توجد الصور التالية داخل مجلد Test_Evidence التابع لهذه المرحلة.
 
-### Chart 17 — Research Supervision Workload
+### الدليل الأول: Schema Audit
 
-SQL verification identified:
-- Total professors: 32
-- Professors with supervision assignments: 24
-- Professors without supervision assignments: 8
-- Total supervision assignments: 24
+تُظهر الصورة نجاح 147 فحصًا وصفر Failed Checks.
 
-The dashboard was reviewed against the
-professor-level SQL results.
+![نتيجة Schema Audit](Test_Evidence/01_Schema_Audit.png)
 
-### Chart 18 — Research Supervision Coverage
+### الدليل الثاني: Final Integrity Audit
 
-Verified SQL results:
-- Departments: 8
-- Research projects: 16
-- Supervised projects: 16
-- Unsupervised projects: 0
-- Supervision assignments: 24
-- Supervision coverage: 100%
+تُظهر الصورة إجمالي 969 سجلًا، ونتيجة الفحص العام مع بندي المراجعة.
 
-Each department has:
-- 2 research projects
-- 2 supervised projects
-- 0 unsupervised projects
-- 3 supervision assignments
+![ملخص Final Integrity Audit](Test_Evidence/02_Final_Integrity_Audit.png)
 
-The Power BI chart and coverage measure
-were reviewed against these results.
+### الدليل الثالث: القرارات المفتوحة
 
-## 6. DirectQuery Verification
+يوثّق الدليل بندي OBD-01 وD-18؛ وتظل حالتهما OPEN إلى حين اعتماد قواعد الأعمال.
 
-DirectQuery was retained during the
-Power BI implementation.
+![القرارات المفتوحة](Test_Evidence/03_Open_Business_Decisions.png)
 
-Verification activities included:
-- Storage Mode inspection
-- SQL source connectivity validation
-- Visual rendering review
-- Performance Analyzer testing
+### الدليل الرابع: Smoke Checks
 
-A recorded Performance Analyzer measurement
-for Chart 18 was 118 ms.
+يوثّق الدليل اسم قاعدة الاختبار وأعداد البيانات والحالتين المفتوحتين.
 
-This is an observed measurement, not a
-formal performance SLA or load-test result.
+![نتائج Smoke Checks](Test_Evidence/04_Smoke_Checks.png)
 
-## 7. Final Visual Quality Assurance
+### الدليل الخامس: استعلام Q20
 
-Activities covered:
-- Chart 17 supervision workload reconciliation
-- Professors with zero assignments
-- Chart 18 department-level supervision coverage
-- Correct category labels and aggregation
-- Tooltip and DAX measure inspection
-- SQL-to-dashboard numerical reconciliation
+يعرض الاستعلام مقارنة ResearchParticipation مع ResearchCollaboration دون استنتاج الامتثال لقاعدة D-18 غير المحسومة.
 
-The documented checks support technical
-acceptance of the reviewed visualizations.
+![نتيجة Q20](Test_Evidence/05_Q20_Research_Collaboration.png)
 
-## 8. Outstanding Business Decisions
+## ترتيب إعادة التحقق
 
-Decision D-18 remains open.
+1. تجهيز نسخة اختبار منفصلة، مع التأكد من أن اسم القاعدة في جميع أوامر USE وشروط DB_NAME هو UniversityManagementDB_Test. يُتجنب تكرار الاستبدال الذي ينتج أسماء مثل UniversityManagementDB_Test_Test.
+2. تشغيل ملفات إنشاء الجداول حسب ترتيبها الرقمي داخل SQL/01_Schema في Phase 4، ثم تشغيل Schema Audit.
+3. تشغيل ملفات Seed Data حسب ترتيبها الرقمي داخل SQL/03_Seed_Data في Phase 4، مع مراجعة Messages ونتائج التحقق بعد كل ملف.
+4. تشغيل Final Integrity Audit وتسجيل أعداد PASS وFAIL وREVIEW والحالة العامة كما تظهر فعليًا.
+5. تشغيل ReadOnly Smoke Checks واستعلامات Q01 إلى Q20 في Phase 5، وحفظ النتائج ذات الصلة.
+6. فتح تقرير Power BI والتحقق من إعدادات مصدر البيانات والفلاتر، ثم مقارنة المؤشرات المطلوبة باستعلامات SQL المناسبة.
+7. حفظ أدلة أي تشغيل جديد بتاريخها واسم قاعدة البيانات، ثم تحديث هذا الملخص بما يعكس النتائج الجديدة.
 
-Subject:
-Timing of mandatory ResearchCollaboration.
+## حالة الإغلاق
 
-The technical database audit passed, but
-this business-level decision still requires
-formal clarification.
+اكتمل اختبار Schema الموثّق بنتيجة PASS، واكتملت بيانات الاختبار بالإجمالي المتوقع. وأظهر Final Integrity Audit صفر Failed Checks مع بندي REVIEW مفتوحين. كما سُلّم تقرير Power BI المكوّن من ست صفحات وصوره عبر GitHub وفق تأكيد صاحب المشروع.
 
-Any additional unresolved business decisions
-should be recorded in the final decision log.
+**حالة الإغلاق الحالية: تسليم الملفات موثّق؛ ويظل إغلاق الأعمال مشروطًا بحسم OBD-01 وD-18.**
 
-## 9. Final Audit Summary
-
-| Audit Area | Result |
-|---|---|
-| Database Table Structure | PASS |
-| Primary Key Validation | PASS |
-| Foreign Key Validation | PASS |
-| Referential Integrity | PASS |
-| Composite Key Mapping | PASS |
-| Business Rule Checks | PASS |
-| SQL Reconciliation | PASS |
-| Chart 17 Verification | Reviewed |
-| Chart 18 Verification | Reviewed |
-| DirectQuery Configuration | Verified |
-| Business Decision D-18 | OPEN |
-| GitHub Artifact Publication | IN PROGRESS |
-
-## 10. Project Closure Status
-
-Technical database verification:
-PASSED
-
-Documented dashboard verification:
-REVIEWED
-
-Outstanding business decisions:
-OPEN
-
-GitHub publication:
-IN PROGRESS
-
-Overall status:
-TECHNICAL AUDIT PASSED —
-FINAL PUBLICATION AND BUSINESS CLOSURE PENDING
-
-## 11. Remaining Publication Deliverables
-
-Before declaring the GitHub repository complete,
-upload or link the approved project artifacts:
-
-- Conceptual modeling documentation
-- Chen and Crow's Foot ERD files
-- Relational mapping and normalization documentation
-- SQL database creation scripts
-- Data population scripts or safe sample data
-- SQL verification scripts and audit evidence
-- Business queries and DAX documentation
-- Power BI report file, when appropriate
-- Dashboard screenshots
-- Final project validation and closure evidence
-
-Remove sensitive information before publication.
-
-## Conclusion
-
-The available SQL verification evidence supports
-successful technical validation of the university
-database.
-
-The documented Power BI results demonstrate
-reconciliation of selected analytical outputs
-with SQL Server.
-
-Formal repository publication and outstanding
-business decisions must be addressed before
-unconditional project closure.
+تُستكمل مراجعة المؤشرات والتفاعلات التي لم تُوثّق بعد، ويُوثّق النشر إلى Power BI Service وإعداد الاتصال إذا كان ذلك ضمن نطاق التسليم المطلوب.
