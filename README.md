@@ -44,4 +44,13 @@ End-to-end University Management System using SQL Server, ERD, Data Modeling, SQ
 
 ### حالة Power BI
 
-اكتمال اختبار SQL لا يثبت اكتمال Power BI؛ يُوثَّق الاتصال والتقرير بعد تنفيذهما والتحقق منهما.
+اكتمال اختبار SQL لا يثبت اكتمال Power BI؛ يُوثَّق الاتصال والتقرير بعد تنفيذهما والتحقق منهما
+## معاينة تقرير Power BI
+
+يتضمن التقرير ست صفحات تغطي مؤشرات الجامعة، والتسجيل، والأداء الأكاديمي، وأعضاء هيئة التدريس، والأنشطة والشبكات البحثية.
+
+![University at a Glance](Phase_5_Business_Queries_PowerBI_Analytics/PowerBI/Screenshots/01_University_at_a_Glance.png)
+
+[استعراض الصفحات الست للتقرير](Phase_5_Business_Queries_PowerBI_Analytics/README.md)
+
+[تحميل تقرير Power BI بصيغة PBIX](Phase_5_Business_Queries_PowerBI_Analytics/PowerBI/University_Management_Analytics_v2.pbix).
